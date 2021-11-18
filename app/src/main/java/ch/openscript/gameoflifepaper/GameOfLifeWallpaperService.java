@@ -54,7 +54,6 @@ public class GameOfLifeWallpaperService extends WallpaperService {
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(50);
             handler.post(drawRunner);
-            cellPaint.setColor(cellColor);
             cellPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         }
 
@@ -157,9 +156,25 @@ public class GameOfLifeWallpaperService extends WallpaperService {
         }
 
         private void drawSquares(Canvas canvas) {
+            int color = cellColor;
+            int color2 = color + 2500;
+            int color3 = color + 5000;
+            int counter = 0;
             for (int i = 0; i < numColumns; i++) {
                 for (int j = 0; j < numRows; j++) {
                     if (cellChecked[i][j] == 1) {
+                        counter = counter + 1;
+                        if (counter > 3) {
+                                counter = 0;
+                        }
+                        if (counter == 1) {
+                            cellPaint.setColor(color);
+                        } else if (counter == 2) {
+                            cellPaint.setColor(color2);
+                        } else if (counter == 3) {
+                            cellPaint.setColor(color3);
+                        }
+
                         canvas.drawRect(i * cellWidth, j * cellHeight,
                                 (i + 1) * cellWidth, (j + 1) * cellHeight,
                                 cellPaint);
