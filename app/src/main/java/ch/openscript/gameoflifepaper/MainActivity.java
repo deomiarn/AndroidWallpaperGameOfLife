@@ -14,31 +14,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import top.defaults.colorpicker.ColorPickerPopup;
 
 public class MainActivity extends AppCompatActivity {
-
-    private Button mPickColorButton;
-
     private View mColorPreview;
+    private View mCellColorPreview;
 
     private int mDefaultColor;
+    private int mCellDefaultColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPickColorButton = findViewById(R.id.pick_color_button);
-        mColorPreview = findViewById(R.id.preview_selected_color);
-
         SharedPreferences pref = getApplicationContext().getSharedPreferences("storage", 0);
         SharedPreferences.Editor editor = pref.edit();
 
-        mDefaultColor = Color.RED;
+        mColorPreview = findViewById(R.id.preview_selected_color);
+        mCellColorPreview = findViewById(R.id.preview_cell_selected_color);
+
+        mDefaultColor = Color.GRAY;
+        mCellDefaultColor = Color.RED;
+
         mColorPreview.setBackgroundColor(mDefaultColor);
+        mCellColorPreview.setBackgroundColor(mCellDefaultColor);
 
         Button button = findViewById(R.id.button);
 
-        mPickColorButton.setOnClickListener(
-                v -> new ColorPickerPopup.Builder(MainActivity.this).initialColor(Color.RED)
+        mColorPreview.setOnClickListener(
+                v -> new ColorPickerPopup.Builder(MainActivity.this).initialColor(mDefaultColor)
                         .enableBrightness(true)
                         .enableAlpha(true)
                         .okTitle("Choose")
@@ -54,15 +56,31 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }));
 
+        mCellColorPreview.setOnClickListener(
+                v -> new ColorPickerPopup.Builder(MainActivity.this).initialColor(mCellDefaultColor)
+                        .enableBrightness(true)
+                        .enableAlpha(true)
+                        .okTitle("Choose")
+                        .cancelTitle("Cancel")
+                        .showIndicator(true)
+                        .showValue(true)
+                        .build()
+                        .show(v, new ColorPickerPopup.ColorPickerObserver() {
+                            @Override
+                            public void onColorPicked(int color) {
+                                mCellDefaultColor = color;
+                                mCellColorPreview.setBackgroundColor(mCellDefaultColor);
+                            }
+                        }));
+
         button.setOnClickListener(v -> {
             editor.putInt("backgroundColor", mDefaultColor);
+            editor.putInt("cellColor", mCellDefaultColor);
             editor.apply();
 
             Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
             intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new ComponentName(this, GameOfLifeWallpaperService.class));
-            intent.putExtra("backgroundColor", mDefaultColor);
             startActivity(intent);
         });
-
     }
 }
