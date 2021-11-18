@@ -3,6 +3,7 @@ package ch.openscript.gameoflifepaper;
 import android.app.WallpaperManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +29,11 @@ public class MainActivity extends AppCompatActivity {
         mPickColorButton = findViewById(R.id.pick_color_button);
         mColorPreview = findViewById(R.id.preview_selected_color);
 
-        mDefaultColor = 0;
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("storage", 0);
+        SharedPreferences.Editor editor = pref.edit();
+
+        mDefaultColor = Color.RED;
+        mColorPreview.setBackgroundColor(mDefaultColor);
 
         Button button = findViewById(R.id.button);
 
@@ -44,13 +49,14 @@ public class MainActivity extends AppCompatActivity {
                         .show(v, new ColorPickerPopup.ColorPickerObserver() {
                             @Override
                             public void onColorPicked(int color) {
-                                System.out.println(color);
                                 mDefaultColor = color;
                                 mColorPreview.setBackgroundColor(mDefaultColor);
                             }
                         }));
 
         button.setOnClickListener(v -> {
+            editor.putInt("backgroundColor", mDefaultColor);
+            editor.apply();
 
             Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
             intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new ComponentName(this, GameOfLifeWallpaperService.class));
