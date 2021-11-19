@@ -36,18 +36,19 @@ public class GameOfLifeWallpaperService extends WallpaperService {
 
         private Canvas canvas = null;
         private int backgroundColor;
-        private int cellColor;
+        private int differenceCellColor = 80;
+        private int defaultCellColor;
         private int counter = 0;
         private int numColumns = 40;
         private int numRows = 80;
-        private int delay = 60;
+        private int delay = 50;
         private int[][] cellChecked = new int[numColumns][numRows];
         private int cellWidth, cellHeight;
         private Paint cellPaint = new Paint();
 
         public GameOfLifeWallpaperEngine(int backgroundColor, int cellColor) {
             this.backgroundColor = backgroundColor;
-            this.cellColor = cellColor;
+            this.defaultCellColor = cellColor;
             touchEnabled = true;
             squares = new ArrayList<>();
             paint.setAntiAlias(true);
@@ -157,12 +158,33 @@ public class GameOfLifeWallpaperService extends WallpaperService {
         }
 
         private void drawSquares(Canvas canvas) {
-            int color = cellColor;
-            int color2 = color - 50;
+            int color = defaultCellColor;
+            int color2 = color - differenceCellColor;
 
             if (color <= -16777126) {
-                color2 = color + 50;
+                color2 = color + differenceCellColor;
+            } else if (color <= Color.RED && color >= Color.RED - 100) {
+                color2 = color + differenceCellColor;
+            } else if (color <= Color.GRAY && color >= Color.GRAY - 100) {
+                color2 = color + differenceCellColor;
+            } else if (color >= Color.BLACK + 100 && color <= Color.BLACK + 100) {
+                color2 = color + differenceCellColor;
+            } else if (color <= Color.DKGRAY && color >= Color.DKGRAY - 100) {
+                color2 = color + differenceCellColor;
+            } else if (color <= Color.WHITE && color >= Color.WHITE - 100) {
+                color2 = color - differenceCellColor;
+            } else if (color <= Color.GREEN && color >= Color.GREEN - 100) {
+                color2 = color + differenceCellColor;
+            } else if (color <= Color.BLUE && color >= Color.BLUE - 100) {
+                color2 = color + differenceCellColor;
+            } else if (color <= Color.YELLOW && color >= Color.YELLOW - 100) {
+                color2 = color + differenceCellColor;
+            } else if (color <= Color.CYAN && color >= Color.CYAN - 100) {
+                color2 = color + differenceCellColor;
+            } else if (color <= Color.MAGENTA && color >= Color.MAGENTA - 100) {
+                color2 = color + differenceCellColor;
             }
+
             int counter = 0;
             for (int i = 0; i < numColumns; i++) {
                 for (int j = 0; j < numRows; j++) {

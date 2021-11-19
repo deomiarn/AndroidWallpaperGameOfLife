@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         mColorPreview = findViewById(R.id.preview_selected_color);
         mCellColorPreview = findViewById(R.id.preview_cell_selected_color);
 
-        mDefaultColor = Color.GRAY;
-        mCellDefaultColor = Color.BLACK;
+        mDefaultColor = Color.WHITE;
+        mCellDefaultColor = Color.RED;
 
         mColorPreview.setBackgroundColor(mDefaultColor);
         mCellColorPreview.setBackgroundColor(mCellDefaultColor);
