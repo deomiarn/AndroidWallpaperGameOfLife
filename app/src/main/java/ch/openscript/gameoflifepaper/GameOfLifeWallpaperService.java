@@ -36,12 +36,12 @@ public class GameOfLifeWallpaperService extends WallpaperService {
 
         private Canvas canvas = null;
         private int backgroundColor;
-        private int differenceCellColor = 80;
+        private int differenceCellColor = 100;
         private int defaultCellColor;
         private int counter = 0;
         private int numColumns = 40;
         private int numRows = 80;
-        private int delay = 50;
+        private int delay = 100;
         private int[][] cellChecked = new int[numColumns][numRows];
         private int cellWidth, cellHeight;
         private Paint cellPaint = new Paint();
@@ -325,7 +325,7 @@ public class GameOfLifeWallpaperService extends WallpaperService {
 
                 handler.removeCallbacks(drawRunner);
                 if (visible) {
-                    handler.postDelayed(drawRunner, delay);
+                    handler.postDelayed(drawRunner,10);
                 }
             }
         }

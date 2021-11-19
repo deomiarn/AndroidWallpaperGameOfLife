@@ -11,6 +11,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+
 import top.defaults.colorpicker.ColorPickerPopup;
 
 public class MainActivity extends AppCompatActivity {
@@ -77,6 +79,13 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt("backgroundColor", mDefaultColor);
             editor.putInt("cellColor", mCellDefaultColor);
             editor.apply();
+
+            WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
+            try {
+                wallpaperManager.clear();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
             intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new ComponentName(this, GameOfLifeWallpaperService.class));
