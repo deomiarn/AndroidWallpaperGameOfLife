@@ -41,7 +41,7 @@ public class GameOfLifeWallpaperService extends WallpaperService {
         private int counter = 0;
         private int numColumns = 40;
         private int numRows = 80;
-        private int delay = 100;
+        private int delay = 60;
         private int[][] cellChecked = new int[numColumns][numRows];
         private int cellWidth, cellHeight;
         private Paint cellPaint = new Paint();
@@ -93,7 +93,7 @@ public class GameOfLifeWallpaperService extends WallpaperService {
                 createSquares(80);
             }
 
-            if (squares.size() < 200) {
+            if (squares.size() < 250) {
                 createSquares(40);
             }
 
