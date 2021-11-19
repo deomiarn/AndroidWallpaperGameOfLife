@@ -37,6 +37,7 @@ public class GameOfLifeWallpaperService extends WallpaperService {
         private Canvas canvas = null;
         private int backgroundColor;
         private int cellColor;
+        private int counter = 0;
         private int numColumns = 40;
         private int numRows = 80;
         private int delay = 60;
@@ -157,22 +158,25 @@ public class GameOfLifeWallpaperService extends WallpaperService {
 
         private void drawSquares(Canvas canvas) {
             int color = cellColor;
-            int color2 = color + 2500;
-            int color3 = color + 5000;
+            int color2 = color - 50;
+
+            if (color <= -16777126) {
+                color2 = color + 50;
+            }
+            System.out.println(color);
+            System.out.println(color2);
             int counter = 0;
             for (int i = 0; i < numColumns; i++) {
                 for (int j = 0; j < numRows; j++) {
                     if (cellChecked[i][j] == 1) {
                         counter = counter + 1;
                         if (counter > 3) {
-                                counter = 0;
+                            counter = 0;
                         }
                         if (counter == 1) {
                             cellPaint.setColor(color);
                         } else if (counter == 2) {
                             cellPaint.setColor(color2);
-                        } else if (counter == 3) {
-                            cellPaint.setColor(color3);
                         }
 
                         canvas.drawRect(i * cellWidth, j * cellHeight,
@@ -245,6 +249,7 @@ public class GameOfLifeWallpaperService extends WallpaperService {
         @Override
         public void onTouchEvent(MotionEvent event) {
             if (touchEnabled) {
+                counter = counter + 1;
                 float x = event.getX();
                 float y = event.getY();
 
@@ -275,6 +280,12 @@ public class GameOfLifeWallpaperService extends WallpaperService {
                         RectF square3 = new RectF(column, row - 1, column, row - 1);
                         RectF square4 = new RectF(column - 1, row - 1, column - 1, row - 1);
 
+                        if (counter % 3 == 0) {
+                            square2 = new RectF(column + 1, row, column + 1, row);
+                            square3 = new RectF(column - 1, row - 1, column - 1, row - 1);
+                            square4 = new RectF(column - 1, row, column - 1, row);
+                        }
+
                         squares.add(square1);
                         squares.add(square2);
                         squares.add(square3);
@@ -284,6 +295,7 @@ public class GameOfLifeWallpaperService extends WallpaperService {
                         cellChecked[(int) square2.right][(int) square2.top] = 1;
                         cellChecked[(int) square3.right][(int) square3.top] = 1;
                         cellChecked[(int) square4.right][(int) square4.top] = 1;
+
                     }
                 } finally {
                     if (canvas != null)
