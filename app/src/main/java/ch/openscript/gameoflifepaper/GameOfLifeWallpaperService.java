@@ -163,8 +163,6 @@ public class GameOfLifeWallpaperService extends WallpaperService {
             if (color <= -16777126) {
                 color2 = color + 50;
             }
-            System.out.println(color);
-            System.out.println(color2);
             int counter = 0;
             for (int i = 0; i < numColumns; i++) {
                 for (int j = 0; j < numRows; j++) {
