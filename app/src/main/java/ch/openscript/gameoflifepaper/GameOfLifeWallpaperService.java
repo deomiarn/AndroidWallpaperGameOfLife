@@ -18,10 +18,11 @@ public class GameOfLifeWallpaperService extends WallpaperService {
     @Override
     public Engine onCreateEngine() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("storage", 0);
-        int backgroundColor = pref.getInt("backgroundColor", Color.GRAY);
-        int cellColor = pref.getInt("cellColor", Color.BLACK);
+        int backgroundColor = pref.getInt("backgroundColor", Color.WHITE);
+        int cellColor = pref.getInt("cellColor", Color.RED);
+        int delayMultiplication = pref.getInt("delayMultiplication", 3);
 
-        return new GameOfLifeWallpaperEngine(backgroundColor, cellColor);
+        return new GameOfLifeWallpaperEngine(backgroundColor, cellColor, delayMultiplication);
     }
 
     private class GameOfLifeWallpaperEngine extends Engine {
@@ -36,19 +37,21 @@ public class GameOfLifeWallpaperService extends WallpaperService {
 
         private Canvas canvas = null;
         private int backgroundColor;
+        private int delayMultiplication;
         private int differenceCellColor = 100;
         private int defaultCellColor;
         private int counter = 0;
         private int numColumns = 40;
         private int numRows = 80;
-        private int delay = 60;
+        private int delay = 200;
         private int[][] cellChecked = new int[numColumns][numRows];
         private int cellWidth, cellHeight;
         private Paint cellPaint = new Paint();
 
-        public GameOfLifeWallpaperEngine(int backgroundColor, int cellColor) {
+        public GameOfLifeWallpaperEngine(int backgroundColor, int cellColor, int delayMultiplication) {
             this.backgroundColor = backgroundColor;
             this.defaultCellColor = cellColor;
+            this.delayMultiplication = delayMultiplication;
             touchEnabled = true;
             squares = new ArrayList<>();
             paint.setAntiAlias(true);
@@ -114,7 +117,7 @@ public class GameOfLifeWallpaperService extends WallpaperService {
             }
             handler.removeCallbacks(drawRunner);
             if (visible) {
-                handler.postDelayed(drawRunner, delay);
+                handler.postDelayed(drawRunner, delay / delayMultiplication);
             }
         }
 

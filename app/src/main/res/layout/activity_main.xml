@@ -9,9 +9,8 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="285dp"
-        android:layout_height="521dp"
-        android:layout_marginTop="100dp"
+        android:layout_width="325dp"
+        android:layout_height="544dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,16 +25,28 @@
             android:layout_height="wrap_content"
             android:text="Background Color"
             android:textAlignment="center"
+            android:textColor="#000000"
             android:textSize="26sp"
             android:textStyle="bold" />
 
-        <View
-            android:id="@+id/preview_selected_color"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+        <FrameLayout
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:background="@android:color/darker_gray" />
+            android:background="#E6D0F3">
+
+            <View
+                android:id="@+id/preview_selected_color"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/darker_gray" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/textView5"
@@ -43,11 +54,12 @@
             android:layout_height="18dp"
             android:text="Click"
             android:textAlignment="center"
+            android:textColor="#000000"
             android:textSize="16sp" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="59dp" />
+            android:layout_height="33dp" />
 
         <TextView
             android:id="@+id/textView4"
@@ -55,16 +67,28 @@
             android:layout_height="wrap_content"
             android:text="Cell Color"
             android:textAlignment="center"
+            android:textColor="#000000"
             android:textSize="26sp"
             android:textStyle="bold" />
 
-        <View
-            android:id="@+id/preview_cell_selected_color"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:background="@android:color/darker_gray" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+        <FrameLayout
+            android:layout_width="65dp"
+            android:layout_height="63dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#E6D0F3">
+
+            <View
+                android:id="@+id/preview_cell_selected_color"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/darker_gray" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/textView6"
@@ -72,18 +96,80 @@
             android:layout_height="18dp"
             android:text="Click"
             android:textAlignment="center"
+            android:textColor="#000000"
             android:textSize="16sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/cellSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:layout_marginVertical="5dp"
+            android:text="Cell Speed"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="15dp"
+            android:background="#000000"
+            android:gravity="center_horizontal" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/minusButton"
+                android:layout_width="51dp"
+                android:layout_height="51dp"
+                android:backgroundTint="#7F5097"
+                android:text="-"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/delay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp"
+                android:text="3"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/plusButton"
+                android:layout_width="51dp"
+                android:layout_height="51dp"
+                android:backgroundTint="#7F5097"
+                android:text="+"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                tools:ignore="TouchTargetSizeCheck" />
+        </TableRow>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="56dp" />
 
         <Button
             android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="233dp"
+            android:layout_height="51dp"
             android:layout_gravity="center"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            android:backgroundTint="#696969"
-            android:text="Activate Wallpaper" />
+            android:backgroundTint="#7F5097"
+            android:gravity="center"
+            android:text="Activate Wallpaper"
+            android:textAlignment="center" />
 
     </LinearLayout>
 
