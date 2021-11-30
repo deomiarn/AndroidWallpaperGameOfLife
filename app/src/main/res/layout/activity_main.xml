@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8DAEF"
-    android:backgroundTint="#E8DAEF"
+    android:background="#5EA9BE"
+    android:backgroundTint="#5EA9BE"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="Background Color"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="26sp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_gravity="center"
-            android:background="#E6D0F3">
+            android:background="#9ACDE0">
 
             <View
                 android:id="@+id/preview_selected_color"
@@ -54,7 +54,7 @@
             android:layout_height="18dp"
             android:text="Click"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
         <Space
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:text="Cell Color"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="26sp"
             android:textStyle="bold" />
 
@@ -79,7 +79,7 @@
             android:layout_width="65dp"
             android:layout_height="63dp"
             android:layout_gravity="center_horizontal"
-            android:background="#E6D0F3">
+            android:background="#9ACDE0">
 
             <View
                 android:id="@+id/preview_cell_selected_color"
@@ -96,7 +96,7 @@
             android:layout_height="18dp"
             android:text="Click"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
         <Space
@@ -109,7 +109,7 @@
             android:layout_height="29dp"
             android:text="Cell Speed"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -129,8 +129,9 @@
                 android:id="@+id/minusButton"
                 android:layout_width="51dp"
                 android:layout_height="51dp"
-                android:backgroundTint="#7F5097"
+                android:backgroundTint="#CBE1EF"
                 android:text="-"
+                android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -149,10 +150,12 @@
                 android:id="@+id/plusButton"
                 android:layout_width="51dp"
                 android:layout_height="51dp"
-                android:backgroundTint="#7F5097"
+                android:backgroundTint="#CBE1EF"
                 android:text="+"
                 android:textAlignment="center"
+                android:textColor="#000000"
                 android:textSize="20sp"
+                app:iconTint="#000000"
                 tools:ignore="TouchTargetSizeCheck" />
         </TableRow>
 
@@ -165,10 +168,11 @@
             android:layout_width="233dp"
             android:layout_height="51dp"
             android:layout_gravity="center"
-            android:backgroundTint="#7F5097"
+            android:backgroundTint="#CBE1EF"
             android:gravity="center"
             android:text="Activate Wallpaper"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#000000" />
 
     </LinearLayout>
 
