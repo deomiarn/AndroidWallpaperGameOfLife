@@ -43,7 +43,8 @@ public class GameOfLifeWallpaperService extends WallpaperService {
         private int counter = 0;
         private int numColumns = 40;
         private int numRows = 80;
-        private int delay = 200;
+        private int delay = 350;
+        private boolean isDrawing = false;
         private int[][] cellChecked = new int[numColumns][numRows];
         private int cellWidth, cellHeight;
         private Paint cellPaint = new Paint();
@@ -92,6 +93,7 @@ public class GameOfLifeWallpaperService extends WallpaperService {
         }
 
         private void draw() {
+            isDrawing = true;
             if (squares.size() == 0) {
                 createSquares(80);
             }
@@ -119,6 +121,7 @@ public class GameOfLifeWallpaperService extends WallpaperService {
             if (visible) {
                 handler.postDelayed(drawRunner, delay / delayMultiplication);
             }
+            isDrawing = false;
         }
 
         private void createSquares(int generatedCells) {
@@ -140,10 +143,18 @@ public class GameOfLifeWallpaperService extends WallpaperService {
                         RectF square4 = new RectF(column - 1, row - 1, column - 1, row - 1);
 
                         if (i > 0) {
-                            if (3 % i == 0) {
+                            if (2 % i == 0) {
                                 square2 = new RectF(column + 1, row, column + 1, row);
                                 square3 = new RectF(column - 1, row - 1, column - 1, row - 1);
                                 square4 = new RectF(column - 1, row, column - 1, row);
+                            }
+                            if (3 % i == 0) {
+                                square2 = new RectF(column + 1, row - 1, column + 1, row - 1);
+                                square3 = new RectF(column + 1, row - 2, column + 1, row - 2);
+                                square4 = new RectF(column, row - 2, column, row - 2);
+                                RectF square5 = new RectF(column - 1, row - 2, column - 1, row - 2);
+                                squares.add(square5);
+                                cellChecked[(int) square5.right][(int) square5.top] = 1;
                             }
                         }
                         squares.add(square1);
@@ -271,64 +282,61 @@ public class GameOfLifeWallpaperService extends WallpaperService {
 
         @Override
         public void onTouchEvent(MotionEvent event) {
-            if (touchEnabled) {
-                counter = counter + 1;
-                float x = event.getX();
-                float y = event.getY();
+            if (touchEnabled && !isDrawing) {
+                if (event.getAction() == 1) {
+                    counter = counter + 1;
+                    float x = event.getX();
+                    float y = event.getY();
 
-                int column = (int) Math.floor(x / cellWidth);
+                    int column = (int) Math.floor(x / cellWidth);
 
-                if (column < 2) {
-                    column = 2;
-                } else if (column >= numColumns - 1) {
-                    column = numColumns - 3;
-                }
+                    if (column < 2) {
+                        column = 2;
+                    } else if (column >= numColumns - 1) {
+                        column = numColumns - 3;
+                    }
 
-                int row = (int) Math.floor(y / cellHeight);
+                    int row = (int) Math.floor(y / cellHeight);
 
-                if (row < 2) {
-                    row = 2;
-                }
+                    if (row < 2) {
+                        row = 2;
+                    }
+                    if (row >= numRows - 1) {
+                        row = numRows - 3;
+                    }
 
-                if (row >= numRows - 1) {
-                    row = numRows - 3;
-                }
-                SurfaceHolder holder = getSurfaceHolder();
+                    RectF square1 = new RectF(column, row, column, row);
+                    RectF square2 = new RectF(column + 1, row - 1, column + 1, row - 1);
+                    RectF square3 = new RectF(column, row - 1, column, row - 1);
+                    RectF square4 = new RectF(column - 1, row - 1, column - 1, row - 1);
 
-                try {
-                    canvas = holder.lockCanvas();
-                    if (canvas != null) {
-                        RectF square1 = new RectF(column, row, column, row);
-                        RectF square2 = new RectF(column + 1, row - 1, column + 1, row - 1);
-                        RectF square3 = new RectF(column, row - 1, column, row - 1);
-                        RectF square4 = new RectF(column - 1, row - 1, column - 1, row - 1);
+                    if (counter != 0) {
 
-                        if (counter % 3 == 0) {
+
+                        if (counter % 2 == 0) {
                             square2 = new RectF(column + 1, row, column + 1, row);
                             square3 = new RectF(column - 1, row - 1, column - 1, row - 1);
                             square4 = new RectF(column - 1, row, column - 1, row);
                         }
-
-                        squares.add(square1);
-                        squares.add(square2);
-                        squares.add(square3);
-                        squares.add(square4);
-
-                        cellChecked[(int) square1.right][(int) square1.top] = 1;
-                        cellChecked[(int) square2.right][(int) square2.top] = 1;
-                        cellChecked[(int) square3.right][(int) square3.top] = 1;
-                        cellChecked[(int) square4.right][(int) square4.top] = 1;
-
+                        if (counter % 3 == 0) {
+                            square2 = new RectF(column + 1, row - 1, column + 1, row - 1);
+                            square3 = new RectF(column + 1, row - 2, column + 1, row - 2);
+                            square4 = new RectF(column, row - 2, column, row - 2);
+                            RectF square5 = new RectF(column - 1, row - 2, column - 1, row - 2);
+                            squares.add(square5);
+                            cellChecked[(int) square5.right][(int) square5.top] = 1;
+                        }
                     }
-                } finally {
-                    if (canvas != null)
-                        holder.unlockCanvasAndPost(canvas);
-                }
-                super.onTouchEvent(event);
 
-                handler.removeCallbacks(drawRunner);
-                if (visible) {
-                    handler.postDelayed(drawRunner,10);
+                    squares.add(square1);
+                    squares.add(square2);
+                    squares.add(square3);
+                    squares.add(square4);
+
+                    cellChecked[(int) square1.right][(int) square1.top] = 1;
+                    cellChecked[(int) square2.right][(int) square2.top] = 1;
+                    cellChecked[(int) square3.right][(int) square3.top] = 1;
+                    cellChecked[(int) square4.right][(int) square4.top] = 1;
                 }
             }
         }
