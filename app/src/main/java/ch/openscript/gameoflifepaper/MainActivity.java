@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        System.out.println("ja");
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onStart();
         int backgroundColor = pref.getInt("backgroundColor", Color.WHITE);
         int cellColor = pref.getInt("cellColor", Color.RED);
@@ -68,11 +69,9 @@ public class MainActivity extends AppCompatActivity {
         mColorPreview.setOnClickListener(
                 v -> new ColorPickerPopup.Builder(MainActivity.this).initialColor(mDefaultColor)
                         .enableBrightness(true)
-                        .enableAlpha(true)
-                        .okTitle("Choose")
                         .cancelTitle("Cancel")
                         .showIndicator(true)
-                        .showValue(true)
+                        .showValue(false)
                         .build()
                         .show(v, new ColorPickerPopup.ColorPickerObserver() {
                             @Override
